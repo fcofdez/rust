@@ -589,6 +589,12 @@ impl<T> RingBuf<T> {
         unsafe { self.buffer_write(tail, t); }
     }
 
+    #[unstable = "matches collection reform specification, waiting for dust to settle"]
+    pub fn insert(&mut self, pos: uint, t: T) {
+        let idx = self.wrap_index(self.tail + pos);
+        unsafe { self.buffer_write(idx, t); }
+    }
+
     /// Deprecated: Renamed to `push_back`.
     #[deprecated = "Renamed to `push_back`"]
     pub fn push(&mut self, t: T) {
@@ -1667,4 +1673,18 @@ mod tests {
         assert_eq!(ring.get_mut(1), Some(&mut 2));
         assert_eq!(ring.get_mut(2), None);
     }
+
+    #[test]
+    fn test_insert() {
+        let mut ring = RingBuf::new();
+        for i in range(0i, 3) {
+            ring.push_back(i);
+        }
+        ring.insert(0, -1);
+        assert_eq!(ring.get(0), Some(&mut -1));
+        assert_eq!(ring.get_mut(1), Some(&mut -1));
+        assert_eq!(ring.get_mut(2), Some(&mut 2));
+        assert_eq!(ring.get_mut(3), None);
+    }
+
 }
