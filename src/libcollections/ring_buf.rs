@@ -1681,10 +1681,11 @@ mod tests {
             ring.push_back(i);
         }
         ring.insert(0, -1);
-        assert_eq!(ring.get(0), Some(&mut -1));
-        assert_eq!(ring.get_mut(1), Some(&mut -1));
-        assert_eq!(ring.get_mut(2), Some(&mut 2));
-        assert_eq!(ring.get_mut(3), None);
+        ring.insert(1, -2);
+        ring.insert(2, -3);
+        assert_eq!(ring.get(0), Some(&-1i));
+        assert_eq!(ring.get(0), Some(&-2i));
+        assert_eq!(ring.get(0), Some(&-3i));
     }
 
 }
