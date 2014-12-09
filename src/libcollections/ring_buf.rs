@@ -1684,8 +1684,8 @@ mod tests {
         ring.insert(1, -2);
         ring.insert(2, -3);
         assert_eq!(ring.get(0), Some(&-1i));
-        assert_eq!(ring.get(0), Some(&-2i));
-        assert_eq!(ring.get(0), Some(&-3i));
+        assert_eq!(ring.get(1), Some(&-2i));
+        assert_eq!(ring.get(2), Some(&-3i));
     }
 
 }
